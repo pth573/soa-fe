@@ -1,9 +1,24 @@
-<div class="container mt-5">
+<!-- <div class="container mt-5">
   <h2>Thông tin khách hàng</h2>
   <p><strong>Họ tên:</strong> {{ customerInfo.firstName }} {{ customerInfo.lastName }}</p>
   <p><strong>Email:</strong> {{ customerInfo.email }}</p>
   <p><strong>Số điện thoại:</strong> {{ customerInfo.phoneNumber }}</p>
   <p><strong>Địa chỉ:</strong> {{ customerInfo.address }}</p>
+</div> -->
+
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Cột trái chiếm 3/4 màn hình -->
+    <div class="col-md-9">
+      <app-customer></app-customer>
+    </div>
+
+    <!-- Cột phải chiếm 1/4 màn hình -->
+    <div class="col-md-3">
+      <app-technical></app-technical>
+    </div>
+  </div>
 </div>
 
-<app-product></app-product>
+
+<!-- <app-product></app-product> -->

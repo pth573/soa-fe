@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductComponent } from '../product/product.component';
+import { CustomerComponent } from '../customer/customer.component';
+import { TechnicalComponent } from '../technical/technical.component';
 
 @Component({
   selector: 'app-home',
-  imports: [ProductComponent],
+  standalone: true,
+  imports: [ProductComponent, CustomerComponent, TechnicalComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })

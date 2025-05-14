@@ -1,20 +1,8 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-product',
-//   imports: [],
-//   templateUrl: './product.component.html',
-//   styleUrl: './product.component.css'
-// })
-// export class ProductComponent {
-
-// }
-
-
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface WarrantyCondition {
   serialId: string;
@@ -44,12 +32,13 @@ export class ProductComponent implements OnInit {
   searchSerialId: string = '';
   searchResult: WarrantyCondition | null = null;
   errorMessage: string = '';
+  selectedProduct: Product | null = null;
 
-  constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     // Lấy danh sách sản phẩm từ API
-    this.http.get<Product[]>('http://localhost:8080/api/products')
+    this.http.get<Product[]>('http://localhost:4200/api/products')
       .subscribe({
         next: (data) => {
           this.products = data;
@@ -61,7 +50,6 @@ export class ProductComponent implements OnInit {
       });
   }
 
-  // Hàm tìm kiếm serialId
   searchBySerialId() {
     if (!this.searchSerialId) {
       this.errorMessage = "Please enter a Serial ID to search.";
@@ -69,17 +57,44 @@ export class ProductComponent implements OnInit {
       return;
     }
 
-    this.http.get<WarrantyCondition>(`http://localhost:8080/api/products/${this.searchSerialId}`)
-      .subscribe({
-        next: (data) => {
-          this.searchResult = data;
+    // Tìm kiếm trong danh sách sản phẩm đã tải về
+    let found = false;
+    for (const product of this.products) {
+      // Kiểm tra điều kiện tồn tại của warrantyConditions trước khi gọi .find
+      if (product.warrantyConditions && product.warrantyConditions.length > 0) {
+        const condition = product.warrantyConditions.find(w => w.serialId === this.searchSerialId);
+        if (condition) {
+          this.searchResult = condition;
+          this.selectedProduct = product;
           this.errorMessage = '';
-        },
-        error: (err) => {
-          console.error("Error fetching warranty info:", err);
-          this.errorMessage = "Serial ID not found.";
-          this.searchResult = null;
+          found = true;
+          break;
         }
-      });
+      }
+    }
+
+    if (!found) {
+      this.errorMessage = "Serial ID not found.";
+      this.searchResult = null;
+      this.selectedProduct = null;
+    }
   }
+
+openWarrantyForm(warranty: WarrantyCondition) {
+  if (warranty && warranty.serialId) {
+    // Điều hướng đến trang bảo hành, truyền Serial ID làm tham số
+    this.router.navigate(['/warranty-form', warranty.serialId]).then(success => {
+      if (success) {
+        console.log("Navigated to warranty form with Serial ID:", warranty.serialId);
+      } else {
+        console.error("Navigation to warranty form failed.");
+      }
+    }).catch(err => {
+      console.error("Error during navigation:", err);
+    });
+  } else {
+    console.error("Invalid warranty information.");
+  }
+}
+
 }

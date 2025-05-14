@@ -1,0 +1,30 @@
+<!-- <h2>Warranty Request Details</h2>
+<p>Request ID: {{ warrantyRequestId }}</p> -->
+
+<div class="container">
+  <div class="warranty-info">
+    <h3>Thông tin bảo hành</h3>
+
+    <div *ngIf="warrantyStatus">
+      <p><strong>Trạng thái kiểm tra điều kiện:</strong> {{ warrantyStatus.conditionStatus }}</p>
+      <p><strong>Thời gian kiểm tra:</strong> {{ warrantyStatus.conditionCheckedAt }}</p>
+
+      <p><strong>Trạng thái sửa chữa:</strong> {{ warrantyStatus.repairStatus }}</p>
+      <p><strong>Thời gian cập nhật sửa chữa:</strong> {{ warrantyStatus.repairUpdatedAt }}</p>
+
+      <p><strong>Trạng thái bảo hành:</strong> {{ warrantyStatus.warrantyStatus }}</p>
+      <p><strong>Thời gian hoàn thành bảo hành:</strong> {{ warrantyStatus.warrantyCompletedAt }}</p>
+
+      <button (click)="onUpdate()">Cập nhật</button>
+    </div>
+
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <div class="technician-panel">
+    <h3>Nhân viên kĩ thuật</h3>
+    <button (click)="onNextStep()">Bước tiếp</button>
+  </div>
+</div>

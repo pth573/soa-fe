@@ -1,1 +1,36 @@
-<p>register works!</p>
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow" style="width: 100%; max-width: 400px;">
+      <h3 class="text-center mb-4">Đăng ký</h3>
+      
+      <!-- Hiển thị thông báo thành công -->
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+  
+      <!-- Hiển thị thông báo lỗi -->
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+  
+      <form (ngSubmit)="register()">
+        <div class="mb-3">
+          <label for="username" class="form-label">Tên đăng nhập</label>
+          <input type="text" class="form-control" id="username" [(ngModel)]="registerData.username" name="username" required>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Mật khẩu</label>
+          <input type="password" class="form-control" id="password" [(ngModel)]="registerData.password" name="password" required>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" [(ngModel)]="registerData.email" name="email" required>
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Số điện thoại</label>
+          <input type="text" class="form-control" id="phone" [(ngModel)]="registerData.phone" name="phone" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Đăng ký</button>
+      </form>
+    </div>
+  </div>
+  

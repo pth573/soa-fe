@@ -1,60 +1,58 @@
-<div class="search-bar">
-  <input type="text" placeholder="Enter Serial ID" [(ngModel)]="searchSerialId">
-  <button (click)="searchBySerialId()">Search</button>
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+<!-- Search Bar -->
+<div class="container mt-4">
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Enter Serial ID" [(ngModel)]="searchSerialId">
+    <button class="btn btn-primary" (click)="searchBySerialId()">Search</button>
+  </div>
+  <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
 </div>
 
-<div *ngIf="searchResult" class="search-result">
-  <h3>Search Result:</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Serial ID</th>
-        <th>Purchase Date</th>
-        <th>Warranty Months</th>
-        <th>Fixable Issue</th>
-        <th>Replacement Issue</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>{{ searchResult.serialId }}</td>
-        <td>{{ searchResult.purchaseDate }}</td>
-        <td>{{ searchResult.warrantyMonths }}</td>
-        <td>{{ searchResult.fixable }}</td>
-        <td>{{ searchResult.replacement }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<hr>
-
-<div *ngFor="let product of products" class="product-card">
-  <img [src]="product.image" alt="{{ product.name }}" class="product-image">
-  <h2>{{ product.name }}</h2>
-
-  <div class="warranty-details">
-    <h3>Warranty Conditions:</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Serial ID</th>
-          <th>Purchase Date</th>
-          <th>Warranty Months</th>
-          <th>Fixable Issue</th>
-          <th>Replacement Issue</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let warranty of product.warrantyConditions">
-          <td>{{ warranty.serialId }}</td>
-          <td>{{ warranty.purchaseDate }}</td>
-          <td>{{ warranty.warrantyMonths }}</td>
-          <td>{{ warranty.fixable }}</td>
-          <td>{{ warranty.replacement }}</td>
-        </tr>
-      </tbody>
-    </table>
+<!-- Kết quả tìm kiếm -->
+<div *ngIf="searchResult" class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h3>Search Result: {{ selectedProduct?.name }}</h3>
+    </div>
+    <div class="card-body">
+      <img [src]="selectedProduct?.image" alt="{{ selectedProduct?.name }}" class="img-fluid mb-3">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Serial ID</th>
+            <th>Purchase Date</th>
+            <th>Warranty Months</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ searchResult.serialId }}</td>
+            <td>{{ searchResult.purchaseDate }}</td>
+            <td>{{ searchResult.warrantyMonths }}</td>
+            <td>
+              <button class="btn btn-success btn-sm" (click)="openWarrantyForm(searchResult)">Tiến hành bảo hành</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+
+<!-- Danh sách sản phẩm -->
+<hr>
+<div class="container">
+  <div class="row">
+    <div *ngFor="let product of products" class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="image-wrapper">
+          <img [src]="product.image" alt="{{ product.name }}" class="card-img-top">
+        </div>
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{ product.name }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

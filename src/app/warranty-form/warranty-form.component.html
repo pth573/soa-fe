@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <h2>Warranty Request Form</h2>
+
+  <!-- Thông tin khách hàng -->
+  <div class="card mb-3">
+    <div class="card-header">Customer Information</div>
+    <div class="card-body">
+        <p><strong>Name:</strong> {{ customerData?.firstName }} {{ customerData?.lastName }}</p>
+        <p><strong>Email:</strong> {{ customerData?.email }}</p>
+        <p><strong>Phone:</strong> {{ customerData?.phoneNumber }}</p>
+        <p><strong>Address:</strong> {{ customerData?.address }}</p>
+    </div>
+  </div>
+
+  <!-- Thông tin bảo hành -->
+  <div class="card mb-3">
+    <div class="card-header">Warranty Information</div>
+    <div class="card-body">
+      <form>
+        <div *ngFor="let field of warrantyFields" class="form-check mb-2">
+          <input 
+            type="checkbox" 
+            class="form-check-input" 
+            [checked]="getFieldValue(field)" 
+            (change)="updateFieldValue(field, $event)"
+            [attr.id]="field" 
+            name="{{ field }}">
+          <label class="form-check-label" [attr.for]="field">{{ field }}</label>
+        </div>
+
+        <button type="button" class="btn btn-primary mt-3" (click)="submitWarranty()">
+          Submit Warranty Request
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
