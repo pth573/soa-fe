@@ -1,0 +1,60 @@
+<div class="search-bar">
+  <input type="text" placeholder="Enter Serial ID" [(ngModel)]="searchSerialId">
+  <button (click)="searchBySerialId()">Search</button>
+  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+</div>
+
+<div *ngIf="searchResult" class="search-result">
+  <h3>Search Result:</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Serial ID</th>
+        <th>Purchase Date</th>
+        <th>Warranty Months</th>
+        <th>Fixable Issue</th>
+        <th>Replacement Issue</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ searchResult.serialId }}</td>
+        <td>{{ searchResult.purchaseDate }}</td>
+        <td>{{ searchResult.warrantyMonths }}</td>
+        <td>{{ searchResult.fixable }}</td>
+        <td>{{ searchResult.replacement }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<hr>
+
+<div *ngFor="let product of products" class="product-card">
+  <img [src]="product.image" alt="{{ product.name }}" class="product-image">
+  <h2>{{ product.name }}</h2>
+
+  <div class="warranty-details">
+    <h3>Warranty Conditions:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Serial ID</th>
+          <th>Purchase Date</th>
+          <th>Warranty Months</th>
+          <th>Fixable Issue</th>
+          <th>Replacement Issue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let warranty of product.warrantyConditions">
+          <td>{{ warranty.serialId }}</td>
+          <td>{{ warranty.purchaseDate }}</td>
+          <td>{{ warranty.warrantyMonths }}</td>
+          <td>{{ warranty.fixable }}</td>
+          <td>{{ warranty.replacement }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

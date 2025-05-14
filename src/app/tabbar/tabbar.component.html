@@ -1,0 +1,70 @@
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand" routerLink="/">🧩 HOSPITAL APP</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/home" routerLinkActive="active">Trang chủ</a>
+        </li>
+  
+        <!-- Nếu chưa đăng nhập -->
+        <ng-container *ngIf="!isLoggedIn">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/register" routerLinkActive="active">Đăng ký</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">Đăng nhập</a>
+          </li>
+        </ng-container>
+  
+        <!-- Nếu đã đăng nhập -->
+        <ng-container *ngIf="isLoggedIn">
+          <!-- Nếu là role user -->
+          <li class="nav-item" *ngIf="role === 'customer'">
+            <a class="nav-link" routerLink="/user-service/profile">🧍 Thông tin chi tiết người dùng</a>
+          </li>
+          <li class="nav-item" *ngIf="role === 'customer'">
+            <a class="nav-link" routerLink="/user-service/book-appointment">Đặt lịch hẹn</a>
+          </li>
+
+
+          <li class="nav-item" *ngIf="role === 'customer'">
+            <a class="nav-link" routerLink="/chat">Chat</a>
+          </li>
+
+          <!-- Nếu là role doctr -->
+          <li class="nav-item" *ngIf="role === 'doctor'">
+            <a class="nav-link" routerLink="/doctor-service/appointment">Quản lí lịch hẹn</a>
+          </li>
+
+          <!-- Nếu là role nurse -->
+          <li class="nav-item" *ngIf="role === 'nurse'">
+            <a class="nav-link" routerLink="/nurse-service/vital-signs">Thêm sinh hiệu</a>
+          </li>
+
+
+
+          <!-- Nếu là role admin -->
+          <li class="nav-item" *ngIf="role === 'admin'">
+            <a class="nav-link" routerLink="/admin/user">Quản lí người dùng</a>
+          </li>
+
+          <li class="nav-item" *ngIf="role === 'admin'">
+            <a class="nav-link" routerLink="/lab-service/lab-test">Quản lí các xét nghiệm</a>
+          </li>
+
+
+
+  
+          <!-- Nút đăng xuất -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">🚪 Đăng xuất</a>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </nav>
+  
